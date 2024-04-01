@@ -35,7 +35,7 @@ class TerminalScribe:
         self.canvas = canvas
         self.trail = '.'
         self.mark = '*'
-        self.framerate = 0.2
+        self.framerate = 0.1
         self.pos = [0, 0]
 
     def up(self):
@@ -70,24 +70,45 @@ class TerminalScribe:
         # Sleep for a little bit to create the animation
         time.sleep(self.framerate)
 
-# Create a new Canvas instance that is 30 units wide by 30 units tall 
-canvas = Canvas(30, 30)
+    def drawSquare(self, size):
+        for _ in range(0,size):
+            scribe.right()
+        for _ in range(0,size):
+            scribe.down()
+        for _ in range(0,size):
+            scribe.left()
+        for _ in range(0,size):
+            scribe.up()
 
-# Create a new scribe and give it the Canvas object
+canvas = Canvas(30,30)
 scribe = TerminalScribe(canvas)
+scribe.drawSquare(5)
 
-# Draw a small square
-scribe.right()
-scribe.right()
-scribe.right()
-scribe.down()
-scribe.down()
-scribe.down()
-scribe.left()
-scribe.left()
-scribe.left()
-scribe.up()
-scribe.up()
-scribe.up()
+
+def inputDrawing():
+    go = 1
+    while go == 1:
+        print('Please enter the size of the square canvas: [TYPE AN INTEGER]')
+        size = int(input())
+        if size != None:
+            go = 0
+    go = 1
+    canvas = Canvas(size, size)
+    scribe = TerminalScribe(canvas)
+    print('Press any one of WASD keys, then enter to move the cursor. E will end the program')
+    while go == 1:
+        key = input()
+        if key == 'w':
+            scribe.up()
+        if key == 's':
+            scribe.down()
+        if key == 'a':
+            scribe.left()
+        if key == 'd':
+            scribe.right()
+        if key == 'e':
+            go = 0
+
+inputDrawing()
 
 
